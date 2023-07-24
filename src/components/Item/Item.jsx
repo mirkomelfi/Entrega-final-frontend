@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 
 const Item =({producto})=>{
     console.log("item",producto._id)
+    console.log("producto",producto)
     return(
         <>
             <div className="tarjetaProducto">

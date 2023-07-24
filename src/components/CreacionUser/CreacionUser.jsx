@@ -1,4 +1,5 @@
 import { useRef, useState } from "react"
+import { Mensaje } from "../Mensaje/Mensaje";
 
 export const CreacionUser = () => {
 
@@ -6,6 +7,8 @@ export const CreacionUser = () => {
 
     const [boton,setBoton]=useState(null)
     const [addRol,setAddRol]=useState(false)
+    const [mensaje,setMensaje]=useState(null)
+    const [user,setUser]=useState(null)
     
     const botonSeleccionado= (botonSelec) => {
         setBoton(botonSelec)
@@ -24,22 +27,28 @@ export const CreacionUser = () => {
         const userData = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
 
         if (boton=="Visualizar"){
-            await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/api/users/${userData.id_user}`, {
+            const response = await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/api/users/${userData.id_user}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 credentials:"include"
-            }).then(response => response.json())
-                .then(data => {
-                    if (data.status==200){
-                        console.log(data.message)
-                    }
-                    if (data.status==400){
-                        console.log(data.message)
-                    }
-                })
-                .catch(error => console.error(error))
+            })
+            const data = await response.json()
+            if (response.status==200){
+
+                setUser(data)
+            }
+            if (response.status==400||response.status==401){
+
+                setMensaje(data.message)
+            }
+            if (response.status==500){
+
+                setMensaje("Error de servidor")
+            }
+
+
         }
         if (boton=="Modificar"){
             const newRol=userData.rol
@@ -57,7 +66,8 @@ export const CreacionUser = () => {
                     credentials:"include"
                 }).then(response => response.json())
                     .then(data => {
-                        console.log(data)
+                        console.log(data.message)
+                        setMensaje(data.message)
                     })
                     .catch(error => console.error(error))
             }
@@ -72,7 +82,8 @@ export const CreacionUser = () => {
                 credentials:"include"
             }).then(response => response.json())
                 .then(data => {
-                    console.log(data)
+                    console.log(data.message)
+                    setMensaje(data.message)
                 })
                 .catch(error => console.error(error))
         }
@@ -81,10 +92,11 @@ export const CreacionUser = () => {
         
     }
     return (
+
         <div className="container divAdmin" >
             <h3>Vista ADMIN</h3>
             <h4>Control de Usuarios</h4>
-            {boton?
+            {!user?(!mensaje?(boton?
                 <div className="container divForm" >
                     <form onSubmit={consultarForm} ref={datForm}>
                         <div className="mb-3">
@@ -104,7 +116,12 @@ export const CreacionUser = () => {
                     <button  onClick={()=>botonSeleccionado("Modificar")} className="btn btn-primary">Modificar Rol</button>
                     <button  onClick={()=>botonSeleccionado("Eliminar")} className="btn btn-primary">Eliminar</button>
                 </div>
-            }
+            ):<Mensaje msj={mensaje} />):
+            <div className="tarjetaProducto">
+                <h2>{user.email}</h2>
+                <h2>{user.first_name}</h2>
+                <h3>{user.last_name}</h3>
+        </div> }
         </div>
 
     )
