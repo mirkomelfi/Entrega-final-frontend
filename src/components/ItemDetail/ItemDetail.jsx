@@ -55,9 +55,9 @@ const ItemDetail = ({pid,listaProd})=>{
             ? 
         <div>
             
-            <h1>{listaProd.tile}</h1>
-            <p>{listaProd.description}</p>
-            <h3>${listaProd.price}</h3>
+            <h1 className="atributo">{listaProd.title}</h1>
+            <h2 className="atributo">{listaProd.description}</h2>
+            <h3 className="atributo">${listaProd.price}</h3>
 
             {(!agregado ? <ItemCount stock={listaProd.stock} onAdd={onAdd}/> :  <><Link to="/cart"><button>Ver Carrito</button></Link> <Link to="/"><button>Seguir comprando</button></Link></>)}
         </div>

@@ -120,7 +120,8 @@ export const CreacionUser = () => {
             <div className="tarjetaProducto">
                 <h2>{user.email}</h2>
                 <h2>{user.first_name}</h2>
-                <h3>{user.last_name}</h3>
+                <h2>{user.last_name}</h2>
+                <h3>{user.rol}</h3>
         </div> }
         </div>
 

@@ -91,7 +91,8 @@ const Cart = () =>{
             
                 <div key= {producto.productId._id} className="producto">
                     <h1>{producto.productId.title}</h1>
-                    <p>{producto.quantity}</p>
+                    <p>Cantidad: {producto.quantity}</p>
+                    <p>Precio unitario: ${producto.productId.price}</p>
                     <button onClick={()=>removeItem(producto.productId._id)}>Quitar del carrito</button>
                 </div>
                 
@@ -101,7 +102,7 @@ const Cart = () =>{
 
                 <div className="ticket">
                     <h1>Codigo de ticket: {ticket.code}</h1>
-                    <p>Total: {ticket.amount}</p>
+                    <p>Total: ${ticket.amount}</p>
 
                 </div>
 
