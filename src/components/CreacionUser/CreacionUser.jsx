@@ -15,7 +15,6 @@ export const CreacionUser = () => {
         if (botonSelec=="Modificar"){
             setAddRol(true)
         }
-        console.log(botonSelec)
         return;
     }
 
@@ -52,9 +51,8 @@ export const CreacionUser = () => {
         }
         if (boton=="Modificar"){
             const newRol=userData.rol
-            console.log(newRol)
             if (!newRol){
-                console.log("dato invalido")
+                setMensaje("dato invalido")
             }else{
                 const modifiedRol= {rol:newRol}
                 await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/api/users/${userData.id_user}`, {
@@ -66,7 +64,7 @@ export const CreacionUser = () => {
                     credentials:"include"
                 }).then(response => response.json())
                     .then(data => {
-                        console.log(data.message)
+
                         setMensaje(data.message)
                     })
                     .catch(error => console.error(error))
@@ -82,7 +80,7 @@ export const CreacionUser = () => {
                 credentials:"include"
             }).then(response => response.json())
                 .then(data => {
-                    console.log(data.message)
+
                     setMensaje(data.message)
                 })
                 .catch(error => console.error(error))

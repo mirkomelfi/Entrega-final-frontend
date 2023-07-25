@@ -7,7 +7,7 @@ import {useParams} from "react-router-dom";
 const ItemDetailContainer = () =>{
 
     const {_id}= useParams();
-    console.log("id",_id)
+
     const [listaProd,setListaProd]= useState([]);
     const [loading,setLoading]= useState(true);
 
@@ -23,7 +23,7 @@ const ItemDetailContainer = () =>{
         .then(data => {
             const producto= data
             setListaProd(producto)
-            console.log(producto)
+
         })
         .catch(error => console.error(error))
         .finally(()=>{

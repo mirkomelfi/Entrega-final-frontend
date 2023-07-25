@@ -22,6 +22,7 @@ export const App = () => {
           <Route path='/login' element={<Login />} />
           <Route path="/" element={<ItemListContainer greeting="¡Bienvenido al sitio web de la Escuela! ¡Esperamos contar con lo que está buscando!"/>}/>
           <Route path="/producto/:_id" element={<ItemDetailContainer />}/> 
+          <Route path="/category/:category/producto/:_id" element={<ItemDetailContainer />}/> 
           <Route path="/cart" element={<Cart />}/> 
           <Route path="/admin" element={<CreacionUser />}/> 
           <Route path="/password"element={<UserPassword />}/> 

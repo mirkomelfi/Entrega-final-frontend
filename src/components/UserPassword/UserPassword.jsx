@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom"
 import { Mensaje } from "../Mensaje/Mensaje"
 import { Link } from "react-router-dom"
 export const UserPassword = ({emailll}) =>{
-console.log(emailll)
+
     const [mensaje,setMensaje]=useState(null)
     const datForm = useRef()
 

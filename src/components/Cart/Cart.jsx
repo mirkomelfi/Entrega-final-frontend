@@ -29,10 +29,10 @@ const Cart = () =>{
                 setCart(data.cart.products);
             } else {
                 console.log(data)
-                //setMessage(data.message);
+
             }
         } catch (error) {
-           // setMessage('Hubo un problema, intente más tarde');
+
             console.error('Error fetching products:', error);
         }
     }
