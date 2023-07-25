@@ -12,12 +12,10 @@ export const ItemListContainer = ({greeting}) =>{
     const [loading,setLoading]= useState(true);
     let url=`${process.env.REACT_APP_DOMINIO_BACK}/api/products/`
 
-    if (category){
-      url=`${process.env.REACT_APP_DOMINIO_BACK}/api/products?category=${category}`
-    }
-
       useEffect(() => { 
-
+        if (category){
+          url=`${process.env.REACT_APP_DOMINIO_BACK}/api/products?category=${category}`
+        }
         fetch(url, {
           method: "GET",
           headers: {
