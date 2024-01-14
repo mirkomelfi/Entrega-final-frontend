@@ -1,7 +1,8 @@
-import "./ItemDetail.css";
+
+
 import ItemCount from "../ItemCount/ItemCount";
 import { useState } from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 import { Navigate } from "react-router-dom";
 import { Mensaje } from "../Mensaje/Mensaje";
@@ -13,6 +14,8 @@ const ItemDetail = ({pid,listaProd})=>{
     const [agregado,setAgregado]=useState(false)
     const [error,setError]=useState(false)
     const [mensaje,setMensaje]=useState(null)
+    
+    const navigate= useNavigate()
     
     const onAdd = async (contador) => {
         try {
@@ -50,16 +53,24 @@ const ItemDetail = ({pid,listaProd})=>{
     }
 
 
-    return (<div className="producto">
+    return (
+        <div className="productoContainer"> 
+    <div className="tarjetaProducto">
         { (!error)
             ? 
-        <div>
+        <div className="infoProd">
             
-            <h1 className="atributo">{listaProd.title}</h1>
+            <h1 className="atributo title-h1">{listaProd.title}</h1>
             <h2 className="atributo">{listaProd.description}</h2>
             <h3 className="atributo">${listaProd.price}</h3>
 
-            {(!agregado ? <ItemCount stock={listaProd.stock} onAdd={onAdd}/> :  <><Link to="/cart"><button>Ver Carrito</button></Link> <Link to="/"><button>Seguir comprando</button></Link></>)}
+            {(!agregado ? <ItemCount stock={listaProd.stock} onAdd={onAdd}/> :  
+            
+            <>
+                
+            <button  onClick={()=>navigate(`/cart`)} className="button btnPrimary"> Ver Carrito</button><button onClick={()=>navigate(`/`)}  className="button btnPrimary">Seguir comprando</button>
+                
+            </>)}
         </div>
         : 
             <Mensaje msj={mensaje} />
@@ -67,7 +78,7 @@ const ItemDetail = ({pid,listaProd})=>{
             }
             
         </div>
-
+        </div>
     )
 }
 export  {ItemDetail}

@@ -55,7 +55,7 @@ export const UserPassword = ({emailll}) =>{
                         <input type="email" className="form-control" name="email" />
                     </div>
 
-                    <button type="submit" className="btn btn-primary">Solicitar cambio</button>
+                    <button type="submit" className="button btnPrimary">Solicitar cambio</button>
                 </form>
 
             </div>

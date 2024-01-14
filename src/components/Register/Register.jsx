@@ -2,6 +2,7 @@ import { useRef } from "react"
 import { Mensaje } from "../Mensaje/Mensaje"
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import { setToken } from "../../utils/auth-utils"
 
 export const Register = () => {
 
@@ -34,6 +35,7 @@ export const Register = () => {
             const data = await response.json()
 
                 if(response.status == 200) {
+                    setToken(data.token)
                     setMensaje("Cuenta creada. Fuiste loggeado automaticamente")
         
                 } else {
@@ -76,7 +78,7 @@ export const Register = () => {
                     <input type="password" className="form-control" name="password" />
                 </div>
 
-                <button type="submit" className="btn btn-primary">Registrar</button>
+                <button type="submit" className="button btnPrimary">Registrar</button>
                 </form>
 
             </div>

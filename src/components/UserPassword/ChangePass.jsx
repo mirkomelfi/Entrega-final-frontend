@@ -66,7 +66,7 @@ export const ChangePass = () => {
                         <input type="password" className="form-control" name="password" />
                     </div>
 
-                    <button type="submit" className="btn btn-primary">Cambiar contraseña</button>
+                    <button type="submit" className="button btnPrimary">Cambiar contraseña</button>
                 </form>
             </div>
         ):<Mensaje msj={mensaje} />

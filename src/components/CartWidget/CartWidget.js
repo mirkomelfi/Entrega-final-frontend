@@ -7,8 +7,8 @@ const CartWidget = () =>{
 
     return (
         <>
-          <Link to="/cart">
-            <AiOutlineShoppingCart/>            
+            <Link to="/cart">
+            <AiOutlineShoppingCart id="widget"/>            
           </Link>
         </>
    

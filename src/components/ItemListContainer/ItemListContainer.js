@@ -1,8 +1,9 @@
 import React from "react";
-import "./ItemListContainer.css";
+
 import { useState, useEffect } from "react";
 import {ItemList} from "../ItemList/ItemList"
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import { getToken } from "../../utils/auth-utils";
 
 
 export const ItemListContainer = ({greeting}) =>{
@@ -10,9 +11,21 @@ export const ItemListContainer = ({greeting}) =>{
 
     const [listaProd,setListaProd]= useState([]);
     const [loading,setLoading]= useState(true);
+    const navigate= useNavigate()
+
     let url=`${process.env.REACT_APP_DOMINIO_BACK}/api/products/`
 
+    useEffect(() => { 
+      console.log(getToken())
+     
+    if (getToken()==null||getToken()==undefined){
+      console.log(getToken())
+      navigate("/login")
+    }
+  },[])
+
       useEffect(() => { 
+
         if (category){
           url=`${process.env.REACT_APP_DOMINIO_BACK}/api/products?category=${category}`
         }
@@ -38,7 +51,9 @@ export const ItemListContainer = ({greeting}) =>{
     return (
       <div>
         <h1 className="greeting">{greeting}</h1>
-        {loading ? <p>cargando...</p> : <ItemList listaProd={listaProd}/>}
+        <br></br>
+        {category&&<h2 className="greeting">{category.toUpperCase()}</h2>}
+        {loading ? <p>cargando...</p> : <div className="contenedorProductos"> <ItemList listaProd={listaProd}/></div>}
       </div>
    
     );

@@ -1,15 +1,20 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import {ItemDetail} from "../ItemDetail/ItemDetail"
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 
 const ItemDetailContainer = () =>{
 
-    const {_id}= useParams();
+    const {category,_id}= useParams();
 
     const [listaProd,setListaProd]= useState([]);
     const [loading,setLoading]= useState(true);
+    const navigate= useNavigate()
+    
+    const navigateTo=(url)=>{
+      navigate(url)
+    }
 
     useEffect(() => { 
         fetch(`${process.env.REACT_APP_DOMINIO_BACK}/api/products/${_id}`, {
@@ -32,9 +37,14 @@ const ItemDetailContainer = () =>{
     },[])
 
     return (
-        <>
+        <div className="itemDetail">
           {loading ? <p>Cargando...</p> : <ItemDetail pid={_id} listaProd={listaProd}/>}
-        </>
+          {category?
+            <button class="button btnPrimary" onClick={()=>navigateTo(`/category/${category}`)}><span class="btnText">Volver</span></button>
+            :
+            <button class="button btnPrimary" onClick={()=>navigateTo(`/`)}><span class="btnText">Volver</span></button>
+          }
+        </div>
     );
   } 
   

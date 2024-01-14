@@ -1,15 +1,19 @@
 import React from "react";
-import { Navigate} from "react-router-dom";
+import { Navigate, useNavigate} from "react-router-dom";
 import { Mensaje } from "../Mensaje/Mensaje";
 import { useState,useEffect } from "react";
+import { getToken } from "../../utils/auth-utils";
 
-import "./Cart.css";
+
 
 const Cart = () =>{ 
 
     const [finalizada, setFinalizada] = useState(false);
     const [cart, setCart] = useState([]);
+    const navigate= useNavigate()
 
+   
+    const [preferenceId, setPreferenceId] = useState(null);
     const [ticket, setTicket] = useState(null);
 
     const fetchCart = async () => {
@@ -37,11 +41,20 @@ const Cart = () =>{
         }
     }
 
+
     useEffect(() => { 
-        fetchCart()
+        
+        if (getToken()==null||getToken()==undefined){    
+        navigate("/login")
+        }else{
+            fetchCart()
+        }
     },[])
 
-
+    const renderCheckoutButton = (preferenceId) => {
+        if (!preferenceId) return null;
+    }
+    
     const removeItem=async(id)=>{
         let status=0
         await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/api/carts/product/${id}`, {
@@ -76,41 +89,81 @@ const Cart = () =>{
             })
             .then(response => response.json())
             .then(data => {
-
+            
             setTicket(data.ticket_generado)
             setFinalizada(true)
             })
             .catch(error => console.error(error))
         }
     }
+
+    const pagoMP = async()=>{
+        if (cart){
+            await fetch(`${process.env.REACT_APP_DOMINIO_BACK}/create_preference`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body:JSON.stringify(cart),
+            credentials:"include"
+        })
+        .then((response) => {
+          console.log("create_preference")
+          return response.json();
+        })
+        .then((preference) => {
+          setPreferenceId(preference.id);
+          setFinalizada(true)
+          console.log("set-create_preference")
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+        }
+    }
     
     return (
-        <>
-            <h3>Carrito</h3>
-            {cart?(!finalizada?(cart.map(producto=>
+        
+        <div className="cartContainer">
+            {!finalizada?<h1 className="detail-title cart-title">Carrito actual</h1>:<h1 className="detail-title">Carrito comprado</h1>}
+            <div className="cartCard">
+            {cart.length!=0?(!finalizada?(cart.map(producto=>
             
-                <div key= {producto.productId._id} className="producto">
+                <div key= {producto.productId._id} className="tarjetaProducto">
                     <h1>{producto.productId.title}</h1>
-                    <p>Cantidad: {producto.quantity}</p>
-                    <p>Precio unitario: ${producto.productId.price}</p>
-                    <button onClick={()=>removeItem(producto.productId._id)}>Quitar del carrito</button>
+                    <h2>Cantidad: {producto.quantity}</h2>
+                    <h3>Precio unitario: ${producto.productId.price}</h3>
+                    <button className="button btnPrimary" onClick={()=>removeItem(producto.productId._id)}>Quitar del carrito</button>
                 </div>
                 
                 )
                 )
                 :
-
+                 
+                 
                 <div className="ticket">
                     <h1>Codigo de ticket: {ticket.code}</h1>
-                    <p>Total: ${ticket.amount}</p>
-
+                    <h2>Total: ${ticket.amount}</h2>
+                    <h3>Email automático enviado. Revise su casilla para ver el ticket.</h3>
+                    <button className="button btnPrimary" onClick={()=>navigate("/")}>Menu Principal</button>
                 </div>
 
-                ):<><Mensaje msj={"Carrito vacio"} /></>}
+                ):
+                <div className="cart-empty">
+                <Mensaje msj={"No hay productos en el carrito"} />
+                <button className="button btnPrimary" onClick={()=>navigate("/")}>Menu Principal</button>
+                </div>}
             <>
-            {!finalizada&&<button onClick={()=>finalizarCompra()}>finalizar Compra</button>}
+           
             </>
-        </>
+            
+        </div>
+        {(!finalizada&&cart.length!=0)&&<button className="button btnPrimary" onClick={()=>finalizarCompra()}>Finalizar Compra</button>}
+            {
+            
+            //!finalizada&&<button onClick={()=>pagoMP()}>pagar MP </button>
+            }
+        </div>
     );
   } 
   
