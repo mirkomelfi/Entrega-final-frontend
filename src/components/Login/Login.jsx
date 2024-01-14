@@ -104,12 +104,12 @@ export const Login = () => {
 
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label">Email</label>
-                        <input type="email" className="form-control" name="email" />
+                        <input type="email" className="form-control" name="email" required/>
                     </div>
 
                     <div className="mb-3">
                         <label htmlFor="password" className="form-label">Contraseña</label>
-                        <input type="password" className="form-control" name="password" />
+                        <input type="password" className="form-control" name="password" required />
                     </div>
 
                    { !loggeado&&<button type="submit" className="button btnPrimary">Iniciar Sesion</button>}

@@ -44,11 +44,11 @@ const Cart = () =>{
 
     useEffect(() => { 
         
-        if (getToken()==null||getToken()==undefined){    
-        navigate("/login")
-        }else{
+        //if (getToken()==null||getToken()==undefined){    
+        //navigate("/login")
+        //}else{
             fetchCart()
-        }
+        //}
     },[])
 
     const renderCheckoutButton = (preferenceId) => {

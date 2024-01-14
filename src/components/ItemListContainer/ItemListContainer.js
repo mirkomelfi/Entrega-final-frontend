@@ -20,7 +20,7 @@ export const ItemListContainer = ({greeting}) =>{
      
     if (getToken()==null||getToken()==undefined){
       console.log(getToken())
-      navigate("/login")
+      //navigate("/login")
     }
   },[])
 

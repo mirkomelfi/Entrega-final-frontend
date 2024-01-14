@@ -52,7 +52,7 @@ export const UserPassword = ({emailll}) =>{
 
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label">Email</label>
-                        <input type="email" className="form-control" name="email" />
+                        <input type="email" className="form-control" name="email" required/>
                     </div>
 
                     <button type="submit" className="button btnPrimary">Solicitar cambio</button>
